@@ -3,8 +3,7 @@
 #include <cstdint>
 #include <vector>
 
-template <typename T>
-void swap(T &a, T &b) {
+template <typename T> void swap(T &a, T &b) {
   T c = a;
   a = b;
   b = c;
@@ -24,5 +23,24 @@ uint64_t gcd(uint64_t p, uint64_t q);
 
 // vector v is ascending order
 Search_Res binary_search(std::vector<int> v, int target_value);
+
+// Bag data structure
+template <typename T> class Bag {
+public:
+  Bag();
+
+  void add(T data);
+
+  bool is_empty();
+
+  size_t size();
+
+  auto begin() { return this->v.begin(); }
+
+  auto end() { return this->v.end(); }
+
+private:
+  std::vector<T> v;
+};
 
 #endif

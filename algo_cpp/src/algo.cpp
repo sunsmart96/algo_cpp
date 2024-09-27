@@ -1,6 +1,7 @@
 #include "algo.h"
 
 #include <cmath>
+
 using std::vector;
 
 uint64_t gcd(uint64_t p, uint64_t q) {
@@ -29,3 +30,17 @@ Search_Res binary_search(vector<int> v, int target_value) {
 
   return Search_Res(0, false);
 }
+
+template class Bag<double>;
+template class Bag<float>;
+template class Bag<int>;
+
+template <typename T> Bag<T>::Bag() { this->v = std::vector<T>(); }
+
+template <typename T> void Bag<T>::add(T data) { this->v.push_back(data); }
+
+template <typename T> bool Bag<T>::is_empty() {
+  return this->v.size() == 0 ? true : false;
+}
+
+template <typename T> size_t Bag<T>::size() { return this->v.size(); }

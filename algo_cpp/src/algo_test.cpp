@@ -42,6 +42,24 @@ TEST(TEST_BINARY_SEARCH, binary_search) {
   EXPECT_EQ(false, res4.is_found);
 }
 
+// test Bag data structure
+TEST(TEST_BAG, base_test) {
+  auto bag = Bag<double>();
+  EXPECT_EQ(0, bag.size());
+  EXPECT_EQ(true, bag.is_empty());
+
+  bag.add(1.2);
+  EXPECT_EQ(1, bag.size());
+  EXPECT_EQ(false, bag.is_empty());
+  bag.add(1.8);
+
+  double s = 0;
+  for (auto x : bag)
+    s = s + x;
+
+  EXPECT_EQ(3.0, s);
+}
+
 int run_all_tests(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
