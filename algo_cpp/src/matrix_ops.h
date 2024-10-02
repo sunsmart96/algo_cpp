@@ -108,6 +108,18 @@ public:
     return res;
   }
 
+  template <typename U> Matrix<T> operator*(U value) const {
+    Matrix<T> res = Matrix<T>(this->rows, this->cols);
+
+    for (size_t i = 0; i < this->rows; ++i) {
+      for (size_t j = 0; j < this->cols; ++j) {
+        res.set_value_by_ij(i, j, this->p.get()[i][j] * value);
+      }
+    }
+
+    return res;
+  }
+
 private:
   size_t cols;
   size_t rows;
