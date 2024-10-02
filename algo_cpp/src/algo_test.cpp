@@ -76,7 +76,7 @@ TEST(TEST_FIFO_QUEUE, BASE_TEST) {
 
   auto x = q->dequeue();
 
-  EXPECT_EQ(3, x.get()->value);
+  EXPECT_EQ(1, x.get()->value);
 
   EXPECT_EQ(2, q->size());
 }

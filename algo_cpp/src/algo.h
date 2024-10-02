@@ -87,11 +87,10 @@ public:
     if (this->is_empty())
       return nullptr;
     else if (n > 1) {
-      std::shared_ptr<T> p = p_head;
-      for (int i = 0; i < n - 2; i++)
-        p = p.get()->p_backward;
-      std::shared_ptr<T> res = p.get()->p_backward;
-      p.get()->p_backward = nullptr;
+
+      std::shared_ptr<T> res = p_head;
+      p_head = p_head.get()->p_backward;
+      res.get()->p_backward = nullptr;
       n = n - 1;
       return res;
     } else if (n == 1) {
