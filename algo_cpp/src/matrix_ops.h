@@ -41,6 +41,7 @@ public:
       }
       std::cout << std::endl;
     }
+    std::cout << std::endl;
   }
 
   void set_value_by_ij(size_t i, size_t j, T value) {
@@ -50,10 +51,10 @@ public:
     this->p.get()[i][j] = value;
   }
 
-  T get_value_by_ij(size_t i, size_t j) {
+  T get_value_by_ij(size_t i, size_t j) const {
     assert(i >= 0 && i < rows);
     assert(j >= 0 && j < cols);
-    return p.get()[i][j];
+    return this->p.get()[i][j];
   }
 
   void transpose() {
@@ -80,6 +81,32 @@ public:
 
   size_t get_cols() const { return this->cols; }
   size_t get_rows() const { return this->rows; }
+
+  Matrix<T> operator+(const Matrix<T> &new_matrix) const {
+    Matrix<T> res = Matrix<T>(this->rows, this->cols);
+
+    for (size_t i = 0; i < this->rows; ++i) {
+      for (size_t j = 0; j < this->cols; ++j) {
+        res.set_value_by_ij(
+            i, j, this->p.get()[i][j] + new_matrix.get_value_by_ij(i, j));
+      }
+    }
+
+    return res;
+  }
+
+  Matrix<T> operator-(const Matrix<T> &new_matrix) const {
+    Matrix<T> res = Matrix<T>(this->rows, this->cols);
+
+    for (size_t i = 0; i < this->rows; ++i) {
+      for (size_t j = 0; j < this->cols; ++j) {
+        res.set_value_by_ij(
+            i, j, this->p.get()[i][j] - new_matrix.get_value_by_ij(i, j));
+      }
+    }
+
+    return res;
+  }
 
 private:
   size_t cols;
