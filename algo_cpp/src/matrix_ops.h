@@ -4,17 +4,15 @@
 #include <cassert>
 #include <memory>
 
-template <typename T>
-void Matrix_Deleter(T **ptr, size_t rows) {
+template <typename T> void Matrix_Deleter(T **ptr, size_t rows) {
   for (int i = 0; i < rows; ++i) {
     delete[] ptr[i];
   }
   delete[] ptr;
 }
 
-template <typename T>
-class Matrix {
- public:
+template <typename T> class Matrix {
+public:
   Matrix(size_t rows, size_t cols) {
     this->cols = cols;
     this->rows = rows;
@@ -80,7 +78,10 @@ class Matrix {
     this->rows = new_rows;
   }
 
- private:
+  size_t get_cols() const { return this->cols; }
+  size_t get_rows() const { return this->rows; }
+
+private:
   size_t cols;
   size_t rows;
   std::shared_ptr<T *> p;
