@@ -7,8 +7,11 @@ TEST(TEST_MATRIX, BASE_TEST) {
   auto m = Matrix<int>(3, 3);
   m.set_all_value(3);
   // m.print();
-  m.set_value_by_ij(2, 2, 10);
+  m.set_value_by_ij(0, 1, 10);
   // m.print();
   EXPECT_EQ(3, m.get_value_by_ij(0, 2));
-  EXPECT_EQ(10, m.get_value_by_ij(2, 2));
+  EXPECT_EQ(10, m.get_value_by_ij(0, 1));
+  m.transpose();
+  EXPECT_EQ(10, m.get_value_by_ij(1, 0));
+  // m.print();
 }

@@ -4,21 +4,23 @@
 #include <cassert>
 #include <memory>
 
-template <typename T> void Matrix_Deleter(T **ptr, size_t rows) {
+template <typename T>
+void Matrix_Deleter(T **ptr, size_t rows) {
   for (int i = 0; i < rows; ++i) {
     delete[] ptr[i];
   }
   delete[] ptr;
 }
 
-template <typename T> class Matrix {
-public:
+template <typename T>
+class Matrix {
+ public:
   Matrix(size_t rows, size_t cols) {
     this->cols = cols;
     this->rows = rows;
 
-    std::shared_ptr<int *> p_2d_array(
-        new int *[rows], [rows](int **ptr) { Matrix_Deleter(ptr, rows); });
+    std::shared_ptr<T *> p_2d_array(
+        new T *[rows], [rows](T **ptr) { Matrix_Deleter(ptr, rows); });
 
     this->p = p_2d_array;
     for (int i = 0; i < rows; ++i) {
@@ -56,7 +58,29 @@ public:
     return p.get()[i][j];
   }
 
-private:
+  void transpose() {
+    size_t new_rows = this->cols;
+    size_t new_cols = this->rows;
+    std::shared_ptr<T *> new_p(new T *[new_rows], [new_rows](T **ptr) {
+      Matrix_Deleter(ptr, new_rows);
+    });
+
+    for (int i = 0; i < new_rows; ++i) {
+      new_p.get()[i] = new T[new_cols];
+    }
+
+    for (size_t i = 0; i < new_rows; ++i) {
+      for (size_t j = 0; j < new_cols; ++j) {
+        new_p.get()[i][j] = this->p.get()[j][i];
+      }
+    }
+
+    this->p = new_p;
+    this->cols = new_cols;
+    this->rows = new_rows;
+  }
+
+ private:
   size_t cols;
   size_t rows;
   std::shared_ptr<T *> p;
