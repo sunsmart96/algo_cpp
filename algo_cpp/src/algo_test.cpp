@@ -101,8 +101,3 @@ TEST(TEST_LIFO_STACK, BASE_TEST) {
 
   EXPECT_EQ(2, q->size());
 }
-
-int run_all_tests(int argc, char **argv) {
-  ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
-}
