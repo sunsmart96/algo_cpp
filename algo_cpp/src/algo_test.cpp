@@ -81,6 +81,27 @@ TEST(TEST_FIFO_QUEUE, BASE_TEST) {
   EXPECT_EQ(2, q->size());
 }
 
+TEST(TEST_LIFO_STACK, BASE_TEST) {
+  auto n1 = std::make_shared<Node<int>>(1);
+  auto n2 = std::make_shared<Node<int>>(2);
+  auto n3 = std::make_shared<Node<int>>(3);
+
+  auto q = std::make_shared<LIFO_STACK<Node<int>>>();
+  q->push(n1);
+  q->push(n2);
+  q->push(n3);
+
+  EXPECT_EQ(3, q->size());
+
+  // q->print();
+
+  auto x = q->pop();
+
+  EXPECT_EQ(3, x.get()->value);
+
+  EXPECT_EQ(2, q->size());
+}
+
 int run_all_tests(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
