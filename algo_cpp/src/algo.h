@@ -5,7 +5,8 @@
 #include <memory>
 #include <vector>
 
-template <typename T> void swap(T &a, T &b) {
+template <typename T>
+void swap(T &a, T &b) {
   T c = a;
   a = b;
   b = c;
@@ -27,8 +28,9 @@ uint64_t gcd(uint64_t p, uint64_t q);
 Search_Res binary_search(std::vector<int> v, int target_value);
 
 // Bag data structure
-template <typename T> class Bag {
-public:
+template <typename T>
+class Bag {
+ public:
   Bag();
 
   void add(T data);
@@ -41,40 +43,40 @@ public:
 
   auto end() { return this->v.end(); }
 
-private:
+ private:
   std::vector<T> v;
 };
 
-template <typename T> struct Node {
-
+template <typename T>
+struct Node {
   Node(T n) {
-    this->p_backward = nullptr;
+    this->next = nullptr;
     this->value = n;
   }
 
-  ~Node() { this->p_backward = nullptr; }
-  std::shared_ptr<Node<T>> p_backward;
+  ~Node() { this->next = nullptr; }
+  std::shared_ptr<Node<T>> next;
   T value;
 };
 
-template <typename T> class FIFO_QUEUE {
-public:
+template <typename T>
+class FIFO_QUEUE {
+ public:
   FIFO_QUEUE() {
     n = 0;
     p_head = nullptr;
   }
   void enqueue(std::shared_ptr<T> node) {
-
     std::shared_ptr<T> new_node = std::make_shared<T>(node.get()->value);
 
     if (p_head == nullptr)
       p_head = new_node;
     else {
       std::shared_ptr<T> p = p_head;
-      while (p.get()->p_backward != nullptr) {
-        p = p.get()->p_backward;
+      while (p.get()->next != nullptr) {
+        p = p.get()->next;
       }
-      p.get()->p_backward = new_node;
+      p.get()->next = new_node;
     }
 
     n = n + 1;
@@ -87,10 +89,9 @@ public:
     if (this->is_empty())
       return nullptr;
     else if (n > 1) {
-
       std::shared_ptr<T> res = p_head;
-      p_head = p_head.get()->p_backward;
-      res.get()->p_backward = nullptr;
+      p_head = p_head.get()->next;
+      res.get()->next = nullptr;
       n = n - 1;
       return res;
     } else if (n == 1) {
@@ -106,49 +107,47 @@ public:
     std::shared_ptr<T> p = p_head;
     for (size_t i = 0; i < n; i++) {
       std::cout << p.get()->value << std::endl;
-      p = p.get()->p_backward;
+      p = p.get()->next;
     }
   }
 
-private:
+ private:
   size_t n;
   std::shared_ptr<T> p_head;
 };
 
-template <typename T> class LIFO_STACK {
-public:
+template <typename T>
+class LIFO_STACK {
+ public:
   LIFO_STACK() {
     n = 0;
     p_head = nullptr;
   }
 
   void push(std::shared_ptr<T> node) {
-
     std::shared_ptr<T> new_node = std::make_shared<T>(node.get()->value);
 
     if (p_head == nullptr)
       p_head = new_node;
     else {
       std::shared_ptr<T> p = p_head;
-      while (p.get()->p_backward != nullptr) {
-        p = p.get()->p_backward;
+      while (p.get()->next != nullptr) {
+        p = p.get()->next;
       }
-      p.get()->p_backward = new_node;
+      p.get()->next = new_node;
     }
 
     n = n + 1;
   }
 
   std::shared_ptr<T> pop() {
-
     if (this->is_empty())
       return nullptr;
     else if (n > 1) {
       std::shared_ptr<T> p = p_head;
-      for (int i = 0; i < n - 2; i++)
-        p = p.get()->p_backward;
-      std::shared_ptr<T> res = p.get()->p_backward;
-      p.get()->p_backward = nullptr;
+      for (int i = 0; i < n - 2; i++) p = p.get()->next;
+      std::shared_ptr<T> res = p.get()->next;
+      p.get()->next = nullptr;
       n = n - 1;
       return res;
     } else if (n == 1) {
@@ -163,7 +162,7 @@ public:
   bool is_empty() { return n == 0 ? true : false; }
   size_t size() { return n; }
 
-private:
+ private:
   size_t n;
   std::shared_ptr<T> p_head;
 };
