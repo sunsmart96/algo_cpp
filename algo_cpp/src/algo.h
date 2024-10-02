@@ -64,14 +64,17 @@ public:
     p_head = nullptr;
   }
   void enqueue(std::shared_ptr<T> node) {
+
+    std::shared_ptr<T> new_node = std::make_shared<T>(node.get()->value);
+
     if (p_head == nullptr)
-      p_head = node;
+      p_head = new_node;
     else {
       std::shared_ptr<T> p = p_head;
       while (p.get()->p_backward != nullptr) {
         p = p.get()->p_backward;
       }
-      p.get()->p_backward = node;
+      p.get()->p_backward = new_node;
     }
 
     n = n + 1;
@@ -96,7 +99,8 @@ public:
       p_head = nullptr;
       n = n - 1;
       return res;
-    }
+    } else
+      return nullptr;
   }
 
   void print() const {
