@@ -27,8 +27,10 @@ TEST(TEST_MATRIX, BASE_TEST) {
   EXPECT_EQ(1, m4.get_value_by_ij(0, 0));
   EXPECT_EQ(8, m4.get_value_by_ij(1, 0));
 
-  auto m5 = m2 * 2.1;
-
+  auto m5 = m2 * 2;
+  EXPECT_FLOAT_EQ(4.0, m5.get_value_by_ij(0, 0));
+  m5 = m2 * 2.1;
+  EXPECT_FLOAT_EQ(4.2, m5.get_value_by_ij(0, 0));
   // m1.print();
   // m2.print();
   // m3.print();

@@ -83,6 +83,8 @@ public:
   size_t get_rows() const { return this->rows; }
 
   Matrix<T> operator+(const Matrix<T> &new_matrix) const {
+    assert(this->rows == new_matrix.get_rows());
+    assert(this->cols == new_matrix.get_cols());
     Matrix<T> res = Matrix<T>(this->rows, this->cols);
 
     for (size_t i = 0; i < this->rows; ++i) {
@@ -96,6 +98,8 @@ public:
   }
 
   Matrix<T> operator-(const Matrix<T> &new_matrix) const {
+    assert(this->rows == new_matrix.get_rows());
+    assert(this->cols == new_matrix.get_cols());
     Matrix<T> res = Matrix<T>(this->rows, this->cols);
 
     for (size_t i = 0; i < this->rows; ++i) {
@@ -108,7 +112,7 @@ public:
     return res;
   }
 
-  template <typename U> Matrix<T> operator*(U value) const {
+  Matrix<T> operator*(T value) const {
     Matrix<T> res = Matrix<T>(this->rows, this->cols);
 
     for (size_t i = 0; i < this->rows; ++i) {
