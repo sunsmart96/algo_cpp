@@ -37,3 +37,42 @@ TEST(TEST_MATRIX, BASE_TEST) {
   // m4.print();
   // m5.print();
 }
+
+TEST(TEST_MATRIX, MATRIX_MUL_TEST) {
+  auto m1 = Matrix<int>(2, 2);
+  auto m2 = Matrix<int>(2, 2);
+
+  m1.set_value_by_ij(0, 0, 1);
+  m1.set_value_by_ij(0, 1, 2);
+  m1.set_value_by_ij(1, 0, 2);
+  m1.set_value_by_ij(1, 1, 3);
+
+  m2.set_value_by_ij(0, 0, 1);
+  m2.set_value_by_ij(0, 1, 2);
+  m2.set_value_by_ij(1, 0, 3);
+  m2.set_value_by_ij(1, 1, 3);
+
+  auto m3 = m1.matrix_mul(m2);
+  // m3.print();
+
+  EXPECT_EQ(7, m3.get_value_by_ij(0, 0));
+  EXPECT_EQ(8, m3.get_value_by_ij(0, 1));
+  EXPECT_EQ(11, m3.get_value_by_ij(1, 0));
+  EXPECT_EQ(13, m3.get_value_by_ij(1, 1));
+
+  auto m4 = Matrix<int>(2, 3);
+  auto m5 = Matrix<int>(3, 4);
+
+  std::vector<int> v1 = {1, 2, 3, 2, 3, 4};
+  std::vector<int> v2 = {2, 1, 3, 4, 1, 2, 3, 4, 2, 3, 4, 5};
+
+  m4.init(v1);
+  m5.init(v2);
+
+  auto m6 = m4.matrix_mul(m5);
+  EXPECT_EQ(10, m6.get_value_by_ij(0, 0));
+  EXPECT_EQ(14, m6.get_value_by_ij(0, 1));
+  EXPECT_EQ(31, m6.get_value_by_ij(1, 2));
+  EXPECT_EQ(40, m6.get_value_by_ij(1, 3));
+  // m6.print();
+}

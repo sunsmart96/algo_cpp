@@ -3,6 +3,7 @@
 
 #include <cassert>
 #include <memory>
+#include <vector>
 
 template <typename T> void Matrix_Deleter(T **ptr, size_t rows) {
   for (int i = 0; i < rows; ++i) {
@@ -23,6 +24,17 @@ public:
     this->p = p_2d_array;
     for (int i = 0; i < rows; ++i) {
       this->p.get()[i] = new T[cols];
+    }
+
+    this->set_all_value(0);
+  }
+
+  void init(std::vector<T> v) {
+    assert(this->rows * this->cols == v.size());
+    for (size_t i = 0; i < this->rows; ++i) {
+      for (size_t j = 0; j < this->cols; ++j) {
+        this->p.get()[i][j] = v[i * this->cols + j];
+      }
     }
   }
 
@@ -121,6 +133,24 @@ public:
       }
     }
 
+    return res;
+  }
+
+  Matrix<T> matrix_mul(const Matrix<T> &new_matrix) {
+    assert(this->cols == new_matrix.get_rows());
+    Matrix<T> res = Matrix<T>(this->rows, new_matrix.get_cols());
+    res.set_all_value(0);
+
+    for (size_t i = 0; i < this->rows; ++i) {
+      for (size_t j = 0; j < new_matrix.get_cols(); ++j) {
+        for (size_t k = 0; k < this->cols; ++k) {
+          res.set_value_by_ij(i, j,
+                              res.get_value_by_ij(i, j) +
+                                  this->p.get()[i][k] *
+                                      new_matrix.get_value_by_ij(k, j));
+        }
+      }
+    }
     return res;
   }
 
