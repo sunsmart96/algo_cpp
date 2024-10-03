@@ -75,4 +75,14 @@ TEST(TEST_MATRIX, MATRIX_MUL_TEST) {
   EXPECT_EQ(31, m6.get_value_by_ij(1, 2));
   EXPECT_EQ(40, m6.get_value_by_ij(1, 3));
   // m6.print();
+
+  std::vector<int> v3 = {1, 2, 3, 1, 2, 3};
+  std::vector<int> v4 = {2, 3, 4, 4, 5, 6};
+
+  auto m7 = Matrix<int>(2, 3);
+  auto m8 = Matrix<int>(2, 3);
+  m7.init(v3);
+  m8.init(v4);
+  m7.matrix_point_mul(m8);
+  // m7.print();
 }
