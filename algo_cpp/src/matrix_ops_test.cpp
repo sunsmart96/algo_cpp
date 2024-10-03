@@ -84,5 +84,11 @@ TEST(TEST_MATRIX, MATRIX_MUL_TEST) {
   m7.init(v3);
   m8.init(v4);
   m7.matrix_point_mul(m8);
+  EXPECT_EQ(2, m7.get_value_by_ij(0, 0));
+  EXPECT_EQ(6, m7.get_value_by_ij(0, 1));
   // m7.print();
+  m7.matrix_point_div(m8);
+  // m7.print();
+  EXPECT_EQ(1, m7.get_value_by_ij(0, 0));
+  EXPECT_EQ(2, m7.get_value_by_ij(0, 1));
 }

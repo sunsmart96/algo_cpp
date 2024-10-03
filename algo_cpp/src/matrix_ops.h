@@ -2,8 +2,11 @@
 #define MATRIX_OPS_H
 
 #include <cassert>
+#include <cmath>
 #include <memory>
 #include <vector>
+
+const double EPS = 1e-9;
 
 template <typename T> void Matrix_Deleter(T **ptr, size_t rows) {
   for (int i = 0; i < rows; ++i) {
@@ -162,6 +165,28 @@ public:
       for (size_t j = 0; j < this->cols; ++j) {
         this->set_value_by_ij(i, j,
                               this->get_value_by_ij(i, j) *
+                                  new_matrix.get_value_by_ij(i, j));
+      }
+  }
+
+  bool is_has_zero() const {
+    for (size_t i = 0; i < this->rows; ++i)
+      for (size_t j = 0; j < this->cols; ++j) {
+        if (abs(this->p.get()[i][j]) < EPS)
+          return true;
+      }
+    return false;
+  }
+
+  void matrix_point_div(const Matrix<T> &new_matrix) {
+    assert(this->rows == new_matrix.get_rows());
+    assert(this->cols == new_matrix.get_cols());
+    assert(new_matrix.is_has_zero() == false);
+
+    for (size_t i = 0; i < this->rows; ++i)
+      for (size_t j = 0; j < this->cols; ++j) {
+        this->set_value_by_ij(i, j,
+                              this->get_value_by_ij(i, j) /
                                   new_matrix.get_value_by_ij(i, j));
       }
   }
