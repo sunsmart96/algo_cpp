@@ -231,6 +231,70 @@ public:
     return res;
   }
 
+  size_t get_size() const { return this->size; }
+
+  T get_element_by_index(size_t index) const {
+    assert(index >= 0 && index < this->size);
+    return this->p.get()[index];
+  }
+
+  Vector<T> operator+(const Vector<T> &v) const {
+    Vector<T> res = Vector<T>(this->size);
+    assert(this->size == v.get_size());
+
+    for (size_t i = 0; i < this->size; ++i) {
+
+      res.set_value_by_index(i, this->get_element_by_index(i) +
+                                    v.get_element_by_index(i));
+    }
+    return res;
+  }
+
+  Vector<T> operator-(const Vector<T> &v) const {
+    Vector<T> res = Vector<T>(this->size);
+    assert(this->size == v.get_size());
+
+    for (size_t i = 0; i < this->size; ++i) {
+
+      res.set_value_by_index(i, this->get_element_by_index(i) -
+                                    v.get_element_by_index(i));
+    }
+    return res;
+  }
+
+  T operator*(const Vector<T> &v) const {
+    T res = 0;
+
+    for (size_t i = 0; i < this->size; ++i) {
+
+      res = res + (this->get_element_by_index(i) * v.get_element_by_index(i));
+    }
+    return res;
+  }
+
+  bool is_has_zero() const {
+    for (size_t i = 0; i < this->size; ++i) {
+      if (abs(this->p.get()[i]) < EPS)
+        return true;
+    }
+    return false;
+  }
+
+  void point_mul(const Vector<T> &v) {
+    for (size_t i = 0; i < this->size; ++i) {
+      this->set_value_by_index(i, this->get_element_by_index(i) *
+                                      v.get_element_by_index(i));
+    }
+  }
+
+  void point_div(const Vector<T> &v) {
+    assert(v.is_has_zero() == false);
+    for (size_t i = 0; i < this->size; ++i) {
+      this->set_value_by_index(i, this->get_element_by_index(i) /
+                                      v.get_element_by_index(i));
+    }
+  }
+
 private:
   size_t size;
   std::shared_ptr<T[]> p;

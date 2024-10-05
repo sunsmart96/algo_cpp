@@ -94,9 +94,29 @@ TEST(TEST_MATRIX, MATRIX_MUL_TEST) {
 }
 
 TEST(TEST_VECTOR, BASE_TEST) {
-  auto v1 = Vector<int>(10);
-  v1.print();
+  auto v1 = Vector<float>(10);
   v1.set_all_value(1);
   v1.set_value_by_index(2, 10);
-  v1.print();
+  EXPECT_EQ(1, v1.get_element_by_index(0));
+  EXPECT_EQ(10, v1.get_element_by_index(2));
+
+  auto v2 = Vector<float>(10);
+  v2.set_all_value(2.1);
+  auto v3 = v1 + v2;
+  EXPECT_FLOAT_EQ(3.1, v3.get_element_by_index(0));
+  EXPECT_FLOAT_EQ(12.1, v3.get_element_by_index(2));
+
+  Vector<float> v4 = v3 - v2;
+  EXPECT_FLOAT_EQ(1.0, v4.get_element_by_index(0));
+  EXPECT_FLOAT_EQ(10.0, v4.get_element_by_index(2));
+
+  v1.point_mul(v2);
+  EXPECT_FLOAT_EQ(2.1, v1.get_element_by_index(0));
+  EXPECT_FLOAT_EQ(21.0, v1.get_element_by_index(2));
+
+  v1.point_div(v2);
+  EXPECT_FLOAT_EQ(1.0, v1.get_element_by_index(0));
+  EXPECT_FLOAT_EQ(10.0, v1.get_element_by_index(2));
+
+  // std::cout << v1 * v4 << std::endl;
 }
