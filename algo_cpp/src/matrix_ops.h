@@ -197,4 +197,43 @@ private:
   std::shared_ptr<T *> p;
 };
 
+template <typename T> class Vector {
+public:
+  Vector(size_t size) : size(size), p(new T[size], std::default_delete<T[]>()) {
+    this->set_all_value(0);
+  }
+
+  void set_all_value(T value) {
+    for (size_t i = 0; i < this->size; i++) {
+      this->p.get()[i] = value;
+    }
+  }
+
+  void print() {
+    for (size_t i = 0; i < this->size; i++) {
+      std::cout << this->p.get()[i] << std::endl;
+    }
+    std::cout << std::endl;
+  }
+
+  void set_value_by_index(size_t index, T value) {
+    assert(index >= 0 && index < this->size);
+    this->p.get()[index] = value;
+  }
+
+  Vector<T> operator*(T value) const {
+    Vector<T> res = Vector<T>(this->size);
+
+    for (size_t i = 0; i < this->cols; ++i) {
+      this->p.get()[i] = this->p.get()[i] * value;
+    }
+
+    return res;
+  }
+
+private:
+  size_t size;
+  std::shared_ptr<T[]> p;
+};
+
 #endif

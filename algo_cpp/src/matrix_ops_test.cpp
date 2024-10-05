@@ -92,3 +92,11 @@ TEST(TEST_MATRIX, MATRIX_MUL_TEST) {
   EXPECT_EQ(1, m7.get_value_by_ij(0, 0));
   EXPECT_EQ(2, m7.get_value_by_ij(0, 1));
 }
+
+TEST(TEST_VECTOR, BASE_TEST) {
+  auto v1 = Vector<int>(10);
+  v1.print();
+  v1.set_all_value(1);
+  v1.set_value_by_index(2, 10);
+  v1.print();
+}
