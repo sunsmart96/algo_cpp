@@ -125,3 +125,23 @@ TEST(TEST_VECTOR, BASE_TEST) {
   EXPECT_FLOAT_EQ(5.41, v1.get_element_by_index(0));
   EXPECT_FLOAT_EQ(14.41, v1.get_element_by_index(2));
 }
+
+TEST(TEST_VECTOR, GXYPY_TEST) {
+  Matrix<int> A(3, 2);
+  A.init({1, 2, 3, 4, 5, 6});
+  Vector<int> x(2);
+  x.init({7, 8});
+
+  Vector<int> y1(3);
+  Vector<int> y2(3);
+
+  y1.matrix_vector_mul(A, x, Gaxpy_Class::COLUMN_ORIENTED);
+  EXPECT_EQ(23, y1.get_element_by_index(0));
+  EXPECT_EQ(53, y1.get_element_by_index(1));
+  EXPECT_EQ(83, y1.get_element_by_index(2));
+
+  y2.matrix_vector_mul(A, x);
+  EXPECT_EQ(23, y2.get_element_by_index(0));
+  EXPECT_EQ(53, y2.get_element_by_index(1));
+  EXPECT_EQ(83, y2.get_element_by_index(2));
+}

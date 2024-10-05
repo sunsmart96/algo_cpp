@@ -8,6 +8,12 @@
 
 const double EPS = 1e-9;
 
+enum class Gaxpy_Class {
+  ROW_ORIENTED,
+  COLUMN_ORIENTED
+
+};
+
 template <typename T> void Matrix_Deleter(T **ptr, size_t rows) {
   for (int i = 0; i < rows; ++i) {
     delete[] ptr[i];
@@ -32,7 +38,7 @@ public:
     this->set_all_value(0);
   }
 
-  void init(std::vector<T> v) {
+  void init(const std::vector<T> &v) {
     assert(this->rows * this->cols == v.size());
     for (size_t i = 0; i < this->rows; ++i) {
       for (size_t j = 0; j < this->cols; ++j) {
@@ -300,6 +306,37 @@ public:
     for (size_t i = 0; i < this->size; ++i) {
       this->set_value_by_index(i, this->p.get()[i] +
                                       a * v.get_element_by_index(i));
+    }
+  }
+
+  void matrix_vector_mul(const Matrix<T> &A, const Vector<T> &x,
+                         Gaxpy_Class preference = Gaxpy_Class::ROW_ORIENTED) {
+    assert(A.get_cols() == x.get_size());
+    assert(A.get_rows() == this->size);
+
+    if (preference == Gaxpy_Class::ROW_ORIENTED) {
+      for (size_t i = 0; i < A.get_rows(); ++i) {
+        for (size_t j = 0; j < A.get_cols(); ++j) {
+          this->set_value_by_index(i, this->get_element_by_index(i) +
+                                          A.get_value_by_ij(i, j) *
+                                              x.get_element_by_index(j));
+        }
+      }
+    } else {
+      for (size_t j = 0; j < A.get_cols(); ++j) {
+        for (size_t i = 0; i < A.get_rows(); ++i) {
+          this->set_value_by_index(i, this->get_element_by_index(i) +
+                                          A.get_value_by_ij(i, j) *
+                                              x.get_element_by_index(j));
+        }
+      }
+    }
+  }
+
+  void init(const std::vector<T> &v) {
+    assert(this->size == v.size());
+    for (size_t i = 0; i < this->size; ++i) {
+      this->set_value_by_index(i, v[i]);
     }
   }
 
