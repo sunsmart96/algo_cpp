@@ -118,5 +118,10 @@ TEST(TEST_VECTOR, BASE_TEST) {
   EXPECT_FLOAT_EQ(1.0, v1.get_element_by_index(0));
   EXPECT_FLOAT_EQ(10.0, v1.get_element_by_index(2));
 
-  // std::cout << v1 * v4 << std::endl;
+  EXPECT_FLOAT_EQ(109.0, v1 * v4);
+
+  v1.saxpy(v2, 2.1);
+
+  EXPECT_FLOAT_EQ(5.41, v1.get_element_by_index(0));
+  EXPECT_FLOAT_EQ(14.41, v1.get_element_by_index(2));
 }

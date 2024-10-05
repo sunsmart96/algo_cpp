@@ -295,6 +295,14 @@ public:
     }
   }
 
+  void saxpy(const Vector<T> &v, T a) {
+    assert(v.is_has_zero() == false);
+    for (size_t i = 0; i < this->size; ++i) {
+      this->set_value_by_index(i, this->p.get()[i] +
+                                      a * v.get_element_by_index(i));
+    }
+  }
+
 private:
   size_t size;
   std::shared_ptr<T[]> p;
