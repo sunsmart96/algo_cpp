@@ -52,7 +52,7 @@ TEST(TEST_MATRIX, MATRIX_MUL_TEST) {
   m2.set_value_by_ij(1, 0, 3);
   m2.set_value_by_ij(1, 1, 3);
 
-  auto m3 = m1.matrix_mul(m2);
+  auto m3 = m1 * m2;
   // m3.print();
 
   EXPECT_EQ(7, m3.get_value_by_ij(0, 0));
@@ -69,7 +69,7 @@ TEST(TEST_MATRIX, MATRIX_MUL_TEST) {
   m4.init(v1);
   m5.init(v2);
 
-  auto m6 = m4.matrix_mul(m5);
+  auto m6 = m4 * m5;
   EXPECT_EQ(10, m6.get_value_by_ij(0, 0));
   EXPECT_EQ(14, m6.get_value_by_ij(0, 1));
   EXPECT_EQ(31, m6.get_value_by_ij(1, 2));
@@ -144,4 +144,12 @@ TEST(TEST_VECTOR, GXYPY_TEST) {
   EXPECT_EQ(23, y2.get_element_by_index(0));
   EXPECT_EQ(53, y2.get_element_by_index(1));
   EXPECT_EQ(83, y2.get_element_by_index(2));
+
+  Matrix<int> mm1(3, 1);
+  Matrix<int> mm2(1, 2);
+
+  mm1.init({1, 2, 3});
+  mm2.init({4, 5});
+  auto r = mm1 * mm2;
+  r.print();
 }

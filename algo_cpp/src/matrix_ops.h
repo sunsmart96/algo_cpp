@@ -145,7 +145,7 @@ public:
     return res;
   }
 
-  Matrix<T> matrix_mul(const Matrix<T> &new_matrix) {
+  Matrix<T> operator*(const Matrix<T> &new_matrix) {
     assert(this->cols == new_matrix.get_rows());
     Matrix<T> res = Matrix<T>(this->rows, new_matrix.get_cols());
     res.set_all_value(0);
